@@ -19,7 +19,7 @@ Get started with MongoLink today and streamline your data management workflow wi
 MongoLink is not available on PyPI, can be installed with pip:
 
 ```bash
-pip install git+ssh://github.com/kovtunov-oleksandr/MongoLink.git
+pip install git+https://github.com/kovtunov-oleksandr/MongoLink.git
 ```
 
 ## Quickstart
