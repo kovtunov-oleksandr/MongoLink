@@ -7,7 +7,13 @@ class MotorDriver(SingletonDriver):
     client: AsyncIOMotorClient
     db: AsyncIOMotorDatabase
 
-    def __init__(self, database_name: str, uri: str = SingletonDriver.DEFAULT_URI):
+    def __init__(
+            self,
+            database_name: str,
+            uri: str = SingletonDriver.DEFAULT_URI,
+            max_pool_connections_size: int = SingletonDriver.DEFAULT_MAX_POOL_CONNECTIONS_SIZE,
+            **kwargs
+    ):
         super().__init__(uri, database_name)
-        self.client = AsyncIOMotorClient(uri)
+        self.client = AsyncIOMotorClient(uri, maxPoolSize=max_pool_connections_size, **kwargs)
         self.db = self.client[database_name]
