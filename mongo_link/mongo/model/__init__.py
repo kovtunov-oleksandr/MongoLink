@@ -1,2 +1,2 @@
 from .mongo_model import ModelType, MongoModel
-from .mongo_nested_model import MongoNestedModel
+from .mongo_embedded_model import MongoEmbeddedModel

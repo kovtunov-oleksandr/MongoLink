@@ -52,10 +52,10 @@ MongoLink models.
 
 ```python
 from typing import List
-from mongo_link.mongo.model import MongoModel, MongoNestedModel
+from mongo_link.mongo.model import MongoModel, MongoEmbeddedModel
 
 
-class User(MongoNestedModel):
+class User(MongoEmbeddedModel):
     name: str
     age: int
 
@@ -66,7 +66,7 @@ class Group(MongoModel):
 ```
 
 * `MongoModel` is a model that can be stored in MongoDB. Also, it has an `id` field.
-* `MongoNestedModel` is a model that can be part of `MongoModel`, but it has no `id` field. 
+* `MongoEmbeddedModel` is a model that can be part of `MongoModel`, but it has no `id` field. 
 It's just a nested object of mongo document.
 
 ### Repositories
