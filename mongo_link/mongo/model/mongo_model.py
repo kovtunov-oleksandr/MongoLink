@@ -1,5 +1,5 @@
 import json
-from typing import ClassVar, Optional, TypeVar
+from typing import Optional, TypeVar
 
 from bson import ObjectId
 from pydantic import BaseModel, Field, validator
@@ -7,8 +7,6 @@ from pydantic import BaseModel, Field, validator
 
 class MongoModel(BaseModel):
     id: Optional[ObjectId] = Field(alias='_id')
-
-    null_not_existed_fields: ClassVar[bool] = False
 
     @validator('id', pre=True, always=True)
     def validate_id(cls, id_value):
