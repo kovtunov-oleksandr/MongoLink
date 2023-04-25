@@ -1,5 +1,5 @@
-import json
-from typing import Optional, TypeVar
+import enum
+from typing import Any, Iterable, Optional, TypeVar
 
 from bson import ObjectId
 from pydantic import BaseModel, Field, validator
@@ -14,13 +14,21 @@ class MongoModel(BaseModel):
             raise ValueError("Invalid ObjectId, ObjectId provides only by MongoDB")
         return id_value
 
-    def json_like_dict(self) -> dict:
-        data = json.loads(self.json(by_alias=True))
+    def __convert_enums_to_strings(self, obj: Any) -> Any:
+        if isinstance(obj, dict):
+            return {key: self.__convert_enums_to_strings(value) for key, value in obj.items()}
+        elif isinstance(obj, Iterable) and not isinstance(obj, str):
+            return type(obj)(self.__convert_enums_to_strings(item) for item in obj)
+        elif isinstance(obj, enum.Enum):
+            return obj.value
+        else:
+            return obj
+
+    def mongo_dict(self, by_alias=True, **kwargs) -> dict:
+        data = self.dict(**kwargs, by_alias=by_alias)
         if self.id is None and "_id" in data:
             data.pop("_id")
-        else:
-            data['_id'] = self.id
-        return data
+        return self.__convert_enums_to_strings(data)
 
     class Config:
         json_encoders = {

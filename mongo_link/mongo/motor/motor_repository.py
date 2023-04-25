@@ -21,7 +21,7 @@ class MotorRepository(MongoRepository):
         Insert one document to collection
         Example await user_repo.insert_one(User(name="John", age=18))
         """
-        result = await self.collection.insert_one(model.json_like_dict())
+        result = await self.collection.insert_one(model.mongo_dict())
         model.id = result.inserted_id
         return model
 
@@ -30,7 +30,7 @@ class MotorRepository(MongoRepository):
         Insert multiple documents to collection
         Example: await user_repo.insert_many([User(name="John", age=18), User(name="Jane", age=21)])
         """
-        documents = [model.json_like_dict() for model in models]
+        documents = [model.mongo_dict() for model in models]
         result = await self.collection.insert_many(documents)
         inserted_ids = result.inserted_ids
         for i, model in enumerate(models):
@@ -48,7 +48,7 @@ class MotorRepository(MongoRepository):
             old_document = await self.find_one({'_id': model.id})
             if not old_document:
                 raise DocumentNotFound(f"No document found with id {model.id}")
-            new_document = model.json_like_dict()
+            new_document = model.mongo_dict()
             result = await self.collection.replace_one({'_id': model.id}, new_document)
             if result.matched_count == 0:
                 raise DocumentNotFound(f"No document found with id {model.id}")
