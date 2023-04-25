@@ -1,10 +1,10 @@
-from typing import Type
+from typing import Dict, Type
 
 
 class SingletonMeta(type):
     """A metaclass that creates a singleton class. The singleton class can only have one instance."""
 
-    __instances = {}
+    __instances: Dict[type, type] = {}
 
     def __call__(cls, *args, **kwargs):
         if cls not in cls.__instances:
