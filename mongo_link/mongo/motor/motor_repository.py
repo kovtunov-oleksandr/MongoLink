@@ -3,6 +3,7 @@ from typing import List, Optional
 from motor.motor_asyncio import AsyncIOMotorCollection
 
 from mongo_link.mongo.exceptions import DocumentNotFound
+from mongo_link.mongo.indexes.mongo_index import MongoIndex
 from mongo_link.mongo.model import ModelType
 from mongo_link.mongo.motor.motor_driver import MotorDriver
 from mongo_link.mongo.repository import MongoRepository
@@ -105,9 +106,9 @@ class MotorRepository(MongoRepository):
         documents = await cursor.to_list(length=None)
         return [self.model_cls(**doc) for doc in documents]
 
-    async def create_index(self, keys, **kwargs):
+    async def create_index(self, index: MongoIndex):
         """
         Create an index on the collection.
         Example: await user_repo.create_index([('email', pymongo.ASCENDING)], unique=True)
         """
-        await self.collection.create_index(keys, **kwargs)
+        await self.collection.create_index(index.mongo_keys, **index.mongo_index_settings)
