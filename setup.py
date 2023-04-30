@@ -37,10 +37,5 @@ setup(
         "pydantic==1.10.7",
         "motor==3.1.2"
     ],
-    classifiers=[
-        "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: Apache License",
-        "Operating System :: OS Independent",
-    ],
     python_requires=">=3.6",
 )
