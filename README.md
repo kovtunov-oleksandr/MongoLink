@@ -13,6 +13,7 @@ Clean, expressive, and easy-to-use API
 
 Get started with MongoLink today and streamline your data management workflow with Python and MongoDB!
 
+Full documentation is available at [doc](./doc/Doc.md).
 
 ## Installation
 
